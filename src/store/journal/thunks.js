@@ -1,7 +1,7 @@
 import { collection, doc, setDoc } from 'firebase/firestore/lite';
 import { FirebaseDB } from '../../firebase/config';
 import { addNewEmptyNote, setActiveNote } from './';
-import { savingNewNote, setNotes, setSaving } from './journalSlice';
+import { savingNewNote, setNotes, setSaving, updateNote } from './journalSlice';
 import { loadNotes } from '../../helpers';
 
 export const startNewNote = () => {
@@ -48,5 +48,7 @@ export const startSaveNote = () => {
 
     const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`);
     await setDoc(docRef, noteToFireStore, { merge: true });
+
+    dispatch(updateNote(note));
   };
 };
